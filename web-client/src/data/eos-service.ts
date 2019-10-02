@@ -16,4 +16,8 @@ export class EosService {
     this.api = api;
     this.jsonRpc = jsonRpc;
   }
+
+  getRecentBlocks(count: number): Block[] {
+    return [new Block()];
+  }
 }
