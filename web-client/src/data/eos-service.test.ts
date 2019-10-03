@@ -44,6 +44,6 @@ describe("getRecentBlocks", () => {
     await service.getRecentBlocks(1);
     expect(rpc.get_block).toHaveBeenCalledTimes(1);
     await service.getRecentBlocks(5);
-    expect(rpc.get_block).toHaveBeenCalledTimes(5);
+    expect(rpc.get_block).toHaveBeenCalledTimes(1 + 5);
   });
 });
