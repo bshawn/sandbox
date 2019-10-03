@@ -40,10 +40,10 @@ describe("getRecentBlocks", () => {
     expect(result.length).toBe(4);
   });
 
-  it("calls rpc.get_block()", () => {
-    service.getRecentBlocks(1);
+  it("calls rpc.get_block()", async () => {
+    await service.getRecentBlocks(1);
     expect(rpc.get_block).toHaveBeenCalledTimes(1);
-    service.getRecentBlocks(5);
+    await service.getRecentBlocks(5);
     expect(rpc.get_block).toHaveBeenCalledTimes(5);
   });
 });
