@@ -18,6 +18,11 @@ export class EosService {
   }
 
   getRecentBlocks(count: number): Block[] {
-    return [new Block()];
+    const retVal = [];
+    for (let i = 0; i < count; i++) {
+      this.jsonRpc.get_block(i);
+      retVal.push(new Block());
+    }
+    return retVal;
   }
 }
