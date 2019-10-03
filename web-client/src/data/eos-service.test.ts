@@ -33,17 +33,17 @@ describe("getRecentBlocks", () => {
     expect(result).not.toBeNull;
   });
 
-  it("returns the requested number of blocks", () => {
-    let result = service.getRecentBlocks(1);
+  it("returns the requested number of blocks", async () => {
+    let result = await service.getRecentBlocks(1);
     expect(result.length).toBe(1);
-    result = service.getRecentBlocks(4);
+    result = await service.getRecentBlocks(4);
     expect(result.length).toBe(4);
   });
 
   it("calls rpc.get_block()", () => {
     service.getRecentBlocks(1);
     expect(rpc.get_block).toHaveBeenCalledTimes(1);
-    service.getRecentBlocks(4);
-    expect(rpc.get_block).toHaveBeenCalledTimes(4);
+    service.getRecentBlocks(5);
+    expect(rpc.get_block).toHaveBeenCalledTimes(5);
   });
 });

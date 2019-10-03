@@ -17,10 +17,10 @@ export class EosService {
     this.jsonRpc = jsonRpc;
   }
 
-  getRecentBlocks(count: number): Block[] {
+  async getRecentBlocks(count: number): Promise<Block[]> {
     const retVal = [];
     for (let i = 0; i < count; i++) {
-      this.jsonRpc.get_block(i);
+      await this.jsonRpc.get_block(i);
       retVal.push(new Block());
     }
     return retVal;
