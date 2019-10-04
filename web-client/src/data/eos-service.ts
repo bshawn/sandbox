@@ -21,8 +21,8 @@ export class EosService {
     const blocks: Array<Block> = [];
     let i = 1;
     while (i <= count) {
-      await this.jsonRpc.get_block(i);
-      blocks.push(new Block());
+      const result = await this.jsonRpc.get_block(i);
+      blocks.push(Block.fromBlockResult(result));
       i++;
     }
     return blocks;
