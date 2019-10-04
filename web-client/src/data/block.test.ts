@@ -26,4 +26,13 @@ describe("fromBlockResult", () => {
     expect(block.id).toEqual(blockResult.id);
     expect(block.timestamp).toEqual(blockResult.timestamp);
   });
+
+  it("throws if the blockResult argument is null or undefined", () => {
+    expect(() => Block.fromBlockResult(<any>undefined)).toThrowError(
+      "blockResult was null or undefined"
+    );
+    expect(() => Block.fromBlockResult(<any>null)).toThrowError(
+      "blockResult was null or undefined"
+    );
+  });
 });

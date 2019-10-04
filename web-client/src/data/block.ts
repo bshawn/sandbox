@@ -5,10 +5,12 @@ export class Block {
   public timestamp: string = "";
   public actionCount: number = 0;
 
-  public static fromBlockResult(dto: GetBlockResult): Block {
+  public static fromBlockResult(blockResult: GetBlockResult): Block {
+    if (!blockResult) throw "blockResult was null or undefined";
+
     const block = new Block();
-    block.id = dto.id;
-    block.timestamp = dto.timestamp;
+    block.id = blockResult.id;
+    block.timestamp = blockResult.timestamp;
     return block;
   }
 }
