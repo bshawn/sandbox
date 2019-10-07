@@ -1,37 +1,42 @@
-import React from "react";
+import React, { useState } from "react";
 import "./App.scss";
+import { Block } from "./data/block";
+import { BlockChainService } from "./data/block-chain-service";
 
-const App: React.FC = () => {
+interface AppProps {
+  service: BlockChainService;
+}
+
+const App: React.FC<AppProps> = props => {
+  const [blocks, setBlocks] = useState<Array<Block>>([]);
+  const [isLoading, setIsLoading] = useState(false);
+
+  async function loadBlocks(): Promise<void> {
+    setIsLoading(true);
+    const b = await props.service.getRecentBlocks(10);
+    setBlocks(b);
+    setIsLoading(false);
+  }
+
+  let blockList: JSX.Element;
+  if (isLoading) {
+    blockList = <span>Loading...</span>;
+  } else if (blocks.length === 0) {
+    blockList = <span>No Data</span>;
+  } else {
+    blockList = <span>Got Data</span>;
+  }
+
   return (
     <div className="App">
-      <h1 className="title">Bulma</h1>
-      <p className="subtitle">
-        Modern CSS framework based on{" "}
-        <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Flexible_Box_Layout/Basic_Concepts_of_Flexbox">
-          Flexbox
-        </a>
-      </p>
-
-      <div className="field">
-        <div className="control">
-          <input className="input" type="text" placeholder="Input" />
-        </div>
-      </div>
-
-      <div className="field">
-        <p className="control">
-          <span className="select">
-            <select>
-              <option>Select dropdown</option>
-            </select>
-          </span>
-        </p>
-      </div>
-
+      <h1 className="title">block.one</h1>
+      <p className="subtitle">Developer Test</p>
       <div className="buttons">
-        <a className="button is-primary">Primary</a>
-        <a className="button is-link">Link</a>
+        <button className="button is-primary" onClick={loadBlocks}>
+          Load
+        </button>
       </div>
+      {blockList}
     </div>
   );
 };
