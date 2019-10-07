@@ -19,7 +19,7 @@ beforeEach(() => {
     signatureProvider: sigProvider
   });
 
-  service = new EosService(sigProvider, api, rpc);
+  service = new EosService(rpc);
 });
 
 describe("ctor", () => {

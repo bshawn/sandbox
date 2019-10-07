@@ -1,19 +1,21 @@
-import { SignatureProvider } from "eosjs/dist/eosjs-api-interfaces";
-import { Api, JsonRpc, RpcError } from "eosjs";
+import { BlockChainService } from "./block-chain-service";
+// import { SignatureProvider } from "eosjs/dist/eosjs-api-interfaces";
+// import { Api, JsonRpc, RpcError, RpcInterfaces } from "eosjs";
+import { JsonRpc } from "eosjs";
 import { Block } from "./block";
 
-export class EosService {
-  private signatureProvider: SignatureProvider;
+export class EosService implements BlockChainService {
+  // private signatureProvider: SignatureProvider;
   private jsonRpc: JsonRpc;
-  private api: Api;
+  // private api: Api;
 
   constructor(
-    signatureProvider: SignatureProvider,
-    api: Api,
+    //signatureProvider: SignatureProvider,
+    //api: Api,
     jsonRpc: JsonRpc
   ) {
-    this.signatureProvider = signatureProvider;
-    this.api = api;
+    // this.signatureProvider = signatureProvider;
+    // this.api = api;
     this.jsonRpc = jsonRpc;
   }
 
