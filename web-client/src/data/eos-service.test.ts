@@ -2,7 +2,8 @@ import { EosService } from "./eos-service";
 import { TestSignatureProvider } from "./__mocks__/test-signature-provider";
 import { Api, JsonRpc, RpcError } from "eosjs";
 import { SignatureProvider } from "eosjs/dist/eosjs-api-interfaces";
-import { GetBlockResult } from "eosjs/dist/eosjs-rpc-interfaces";
+import { GetBlockResult, GetInfoResult } from "eosjs/dist/eosjs-rpc-interfaces";
+import { BlockChainInfo } from "./block-chain-info";
 
 jest.mock("eosjs");
 
@@ -25,6 +26,39 @@ beforeEach(() => {
 describe("ctor", () => {
   it("returns an instance of EosService", () => {
     expect(service).toBeInstanceOf(EosService);
+  });
+});
+
+describe("getInfo", () => {
+  beforeEach(() => {
+    rpc.get_info = jest.fn(
+      async (): Promise<GetInfoResult> => {
+        return {
+          server_version: "server_version",
+          chain_id: "chain_id",
+          head_block_num: 0,
+          last_irreversible_block_num: 0,
+          last_irreversible_block_id: "last_irreversible_block_id",
+          head_block_id: "head_block_id",
+          head_block_time: "head_block_time",
+          head_block_producer: "head_block_producer",
+          virtual_block_cpu_limit: 0,
+          virtual_block_net_limit: 0,
+          block_cpu_limit: 0,
+          block_net_limit: 0
+        };
+      }
+    );
+  });
+
+  it("returns an instance of BlockChainInfo", async () => {
+    let result = await service.getInfo();
+    expect(result).toBeInstanceOf(BlockChainInfo);
+  });
+
+  it("calls rpc.get_info()", () => {
+    service.getInfo();
+    expect(rpc.get_info).toHaveBeenCalled();
   });
 });
 

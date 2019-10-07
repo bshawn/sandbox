@@ -3,6 +3,7 @@ import { BlockChainService } from "./block-chain-service";
 // import { Api, JsonRpc, RpcError, RpcInterfaces } from "eosjs";
 import { JsonRpc } from "eosjs";
 import { Block } from "./block";
+import { BlockChainInfo } from "./block-chain-info";
 
 export class EosService implements BlockChainService {
   // private signatureProvider: SignatureProvider;
@@ -28,5 +29,10 @@ export class EosService implements BlockChainService {
       i++;
     }
     return blocks;
+  }
+
+  async getInfo(): Promise<BlockChainInfo> {
+    const result = await this.jsonRpc.get_info();
+    return BlockChainInfo.fromInfoResult(result);
   }
 }
