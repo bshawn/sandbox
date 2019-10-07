@@ -6,7 +6,7 @@ export class Block {
   public actionCount: number = 0;
 
   public static fromBlockResult(blockResult: GetBlockResult): Block {
-    if (!blockResult) throw "blockResult was null or undefined";
+    if (!blockResult) throw new Error("blockResult was null or undefined");
 
     const block = new Block();
     block.id = blockResult.id;
