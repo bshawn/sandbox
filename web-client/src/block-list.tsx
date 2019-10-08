@@ -1,6 +1,6 @@
-import React from "react";
+import React, { MouseEvent } from "react";
 import { Block } from "./data/block";
-import BlockElement from "./BlockElement";
+import BlockElement from "./block-element";
 
 interface BlockListProps {
   blocks: Block[];
@@ -14,10 +14,20 @@ const BlockList: React.FC<BlockListProps> = props => {
   return (
     <div>
       {props.blocks.map(b => (
-        <BlockElement block={b} expanded={false} key={b.id} />
+        <BlockElement
+          block={b}
+          isExpanded={false}
+          key={b.id}
+          onClick={handleBlockClick}
+        />
       ))}
     </div>
   );
 };
+
+function handleBlockClick(e: MouseEvent) {
+  // Collapse currently expanded block
+  // Expand clicked block
+}
 
 export default BlockList;

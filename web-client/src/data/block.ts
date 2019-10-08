@@ -5,6 +5,7 @@ export class Block {
   public timestamp: string = "";
   public previousId: string = "";
   public actionCount: number = 0;
+  public raw: string = "";
 
   public static fromBlockResult(blockResult: GetBlockResult): Block {
     if (!blockResult) throw new Error("blockResult was null or undefined");
@@ -13,6 +14,7 @@ export class Block {
     block.id = blockResult.id;
     block.timestamp = blockResult.timestamp;
     block.previousId = blockResult.previous;
+    block.raw = JSON.stringify(blockResult, null, 2);
     return block;
   }
 }

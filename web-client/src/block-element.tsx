@@ -3,7 +3,7 @@ import { Block } from "./data/block";
 
 interface BlockElementProps {
   block: Block;
-  expanded: boolean;
+  isExpanded: boolean;
   onClick?: (e: MouseEvent) => void;
 }
 
@@ -23,6 +23,11 @@ const BlockElement: React.FC<BlockElementProps> = props => {
             </p>
             <p>
               <small>{props.block.timestamp}</small>
+            </p>
+            <p>
+              <pre>
+                <code>{props.block.raw}</code>
+              </pre>
             </p>
           </div>
         </div>
