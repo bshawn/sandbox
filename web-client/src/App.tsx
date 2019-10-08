@@ -20,29 +20,72 @@ const App: React.FC<AppProps> = props => {
 
   let blockList: JSX.Element;
   if (isLoading) {
-    blockList = <span>Loading...</span>;
+    blockList = <div>Loading...</div>;
   } else if (blocks.length === 0) {
-    blockList = <span>No Data</span>;
+    blockList = <div>No Data</div>;
   } else {
     blockList = (
       <div>
         {blocks.map(b => (
-          <div key={b.id}>{b.id}</div>
+          <div className="box" key={b.id}>
+            <article className="media">
+              <div className="media-left">
+                <figure className="image is-64x64">
+                  <img src="./blockchain-128.png" alt="Image" />
+                </figure>
+              </div>
+              <div className="media-content">
+                <div className="content">
+                  <p>
+                    <strong>{b.id}</strong>
+                  </p>
+                  <p>
+                    <small>{b.timestamp}</small>
+                  </p>
+                </div>
+              </div>
+            </article>
+          </div>
         ))}
       </div>
     );
   }
 
+  let loadButtonCss = "button is-primary";
+  if (isLoading) loadButtonCss += " is-loading is-disabled";
+
   return (
     <div className="App">
-      <h1 className="title">block.one</h1>
-      <p className="subtitle">Developer Test</p>
-      <div className="buttons">
-        <button className="button is-primary" onClick={loadBlocks}>
-          Load
-        </button>
-      </div>
-      {blockList}
+      <section className="hero is-primary is-bold">
+        <div className="hero-body">
+          <div className="container">
+            <h1 className="title">block.one</h1>
+            <h2 className="subtitle">Developer Test</h2>
+          </div>
+        </div>
+      </section>
+
+      <section className="section">
+        <div className="container">
+          <div className="buttons">
+            <button className={loadButtonCss} onClick={loadBlocks}>
+              Load
+            </button>
+          </div>
+          {blockList}
+        </div>
+      </section>
+
+      <footer className="footer">
+        <div className="content has-text-centered">
+          <p>
+            Created by{" "}
+            <strong>
+              <a href="https://github.com/bshawn">Bret Shawn</a>
+            </strong>{" "}
+          </p>
+        </div>
+      </footer>
     </div>
   );
 };
