@@ -1,10 +1,8 @@
-import React, { useState } from "react";
-import { Block } from "./data/block";
-import BlockElement from "./BlockElement";
+import React, { MouseEvent } from "react";
 
 interface LoadButtonProps {
   isLoading: boolean;
-  onClick?: () => void;
+  onClick?: (e: MouseEvent) => void;
 }
 
 const LoadButton: React.FC<LoadButtonProps> = props => {
