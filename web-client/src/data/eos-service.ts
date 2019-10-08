@@ -4,6 +4,7 @@ import { BlockChainService } from "./block-chain-service";
 import { JsonRpc } from "eosjs";
 import { Block } from "./block";
 import { BlockChainInfo } from "./block-chain-info";
+import { GetBlockResult } from "eosjs/dist/eosjs-rpc-interfaces";
 
 export class EosService implements BlockChainService {
   // private signatureProvider: SignatureProvider;
@@ -21,11 +22,20 @@ export class EosService implements BlockChainService {
   }
 
   async getRecentBlocks(count: number): Promise<Block[]> {
+    const info = await this.getInfo();
     const blocks: Array<Block> = [];
-    let i = 1;
-    while (i <= count) {
-      const result = await this.jsonRpc.get_block(i);
+    let i = 0;
+    while (i < count) {
+      let result: GetBlockResult;
+      let id = info.headBlockId;
+
+      if (i > 0) {
+        id = blocks[i - 1].previousId;
+      }
+
+      result = await this.jsonRpc.get_block(id);
       blocks.push(Block.fromBlockResult(result));
+
       i++;
     }
     return blocks;
