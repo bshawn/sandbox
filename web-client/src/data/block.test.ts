@@ -25,6 +25,7 @@ describe("fromBlockResult", () => {
     const block = Block.fromBlockResult(blockResult);
     expect(block.id).toEqual(blockResult.id);
     expect(block.timestamp).toEqual(blockResult.timestamp);
+    expect(block.previousId).toEqual(blockResult.previous);
   });
 
   it("throws if the blockResult argument is null or undefined", () => {
