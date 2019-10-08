@@ -24,7 +24,13 @@ const App: React.FC<AppProps> = props => {
   } else if (blocks.length === 0) {
     blockList = <span>No Data</span>;
   } else {
-    blockList = <span>Got Data</span>;
+    blockList = (
+      <div>
+        {blocks.map(b => (
+          <div key={b.id}>{b.id}</div>
+        ))}
+      </div>
+    );
   }
 
   return (
