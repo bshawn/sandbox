@@ -1,4 +1,4 @@
-import React, { useState, MouseEvent } from "react";
+import React, { useState } from "react";
 import { Block } from "../data/block";
 import BlockElementCode from "./block-element-code";
 import "./block-element.scss";
