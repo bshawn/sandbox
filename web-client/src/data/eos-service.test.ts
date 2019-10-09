@@ -1,7 +1,12 @@
 import { EosService } from "./eos-service";
 import { JsonRpc } from "eosjs";
-import { GetBlockResult, GetInfoResult } from "eosjs/dist/eosjs-rpc-interfaces";
+import {
+  GetBlockResult,
+  GetInfoResult,
+  GetAbiResult
+} from "eosjs/dist/eosjs-rpc-interfaces";
 import { BlockChainInfo } from "./block-chain-info";
+import { AbiInfo } from "./abi-info";
 
 jest.mock("eosjs");
 
@@ -12,6 +17,7 @@ beforeEach(() => {
   rpc = new JsonRpc("test");
   rpc.get_info = fakeGetInfo();
   rpc.get_block = fakeGetBlock();
+  rpc.get_abi = fakeGetAbi();
 
   service = new EosService(rpc);
 });
@@ -31,6 +37,18 @@ describe("getInfo", () => {
   it("calls rpc.get_info()", async () => {
     await service.getInfo();
     expect(rpc.get_info).toHaveBeenCalled();
+  });
+});
+
+describe("getAbi", () => {
+  it("returns an instance of AbiInfo", async () => {
+    let result = await service.getAbi("test");
+    expect(result).toBeInstanceOf(AbiInfo);
+  });
+
+  it("calls rpc.get_abi()", async () => {
+    await service.getAbi("test");
+    expect(rpc.get_abi).toHaveBeenCalled();
   });
 });
 
@@ -83,6 +101,75 @@ function fakeGetInfo(): jest.Mock<Promise<GetInfoResult>> {
         virtual_block_net_limit: 0,
         block_cpu_limit: 0,
         block_net_limit: 0
+      };
+    }
+  );
+}
+
+function fakeGetAbi(): jest.Mock<Promise<GetAbiResult>> {
+  return jest.fn(
+    async (accountName: string): Promise<GetAbiResult> => {
+      return {
+        account_name: accountName,
+        abi: {
+          version: "version",
+          types: [
+            {
+              new_type_name: "new_type_name",
+              type: "type"
+            }
+          ],
+          structs: [
+            {
+              name: "name",
+              base: "base",
+              fields: [
+                {
+                  name: "name",
+                  type: "type"
+                }
+              ]
+            }
+          ],
+          actions: [
+            {
+              name: "name",
+              type: "type",
+              ricardian_contract: "ricardian_contract"
+            }
+          ],
+          tables: [
+            {
+              name: "name",
+              type: "type",
+              index_type: "index_type",
+              key_names: ["key1", "key2"],
+              key_types: ["type1", "type2"]
+            }
+          ],
+          ricardian_clauses: [
+            {
+              id: "id",
+              body: "body"
+            }
+          ],
+          error_messages: [
+            {
+              error_code: "error_code",
+              error_msg: "error_msg"
+            }
+          ],
+          abi_extensions: [
+            {
+              tag: 0,
+              value: "value0"
+            },
+            {
+              tag: 1,
+              value: "value1"
+            }
+          ]
+        }
       };
     }
   );

@@ -1,23 +1,14 @@
 import { BlockChainService } from "./block-chain-service";
-// import { SignatureProvider } from "eosjs/dist/eosjs-api-interfaces";
-// import { Api, JsonRpc, RpcError, RpcInterfaces } from "eosjs";
 import { JsonRpc } from "eosjs";
 import { Block } from "./block";
 import { BlockChainInfo } from "./block-chain-info";
-import { GetBlockResult } from "eosjs/dist/eosjs-rpc-interfaces";
+import { GetBlockResult, GetAbiResult } from "eosjs/dist/eosjs-rpc-interfaces";
+import { AbiInfo } from "./abi-info";
 
 export class EosService implements BlockChainService {
-  // private signatureProvider: SignatureProvider;
   private jsonRpc: JsonRpc;
-  // private api: Api;
 
-  constructor(
-    //signatureProvider: SignatureProvider,
-    //api: Api,
-    jsonRpc: JsonRpc
-  ) {
-    // this.signatureProvider = signatureProvider;
-    // this.api = api;
+  constructor(jsonRpc: JsonRpc) {
     this.jsonRpc = jsonRpc;
   }
 
@@ -44,5 +35,10 @@ export class EosService implements BlockChainService {
   async getInfo(): Promise<BlockChainInfo> {
     const result = await this.jsonRpc.get_info();
     return BlockChainInfo.fromInfoResult(result);
+  }
+
+  async getAbi(accountName: string): Promise<AbiInfo> {
+    const result = await this.jsonRpc.get_abi(accountName);
+    return AbiInfo.fromGetAbiResult(result);
   }
 }
