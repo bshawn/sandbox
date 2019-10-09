@@ -1,4 +1,4 @@
-import React, { MouseEvent } from "react";
+import React from "react";
 import { Block } from "../data/block";
 import BlockElement from "./block-element";
 
