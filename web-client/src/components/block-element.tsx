@@ -5,7 +5,6 @@ import "./block-element.scss";
 
 interface BlockElementProps {
   block: Block;
-  onClick?: (e: MouseEvent) => void;
 }
 
 const BlockElement: React.FC<BlockElementProps> = props => {
