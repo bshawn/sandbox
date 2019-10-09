@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import "./App.scss";
 import { Block } from "./data/block";
 import { BlockChainService } from "./data/block-chain-service";
-import BlockList from "./block-list";
-import LoadButton from "./load-button";
+import BlockList from "./components/block-list";
+import LoadButton from "./components/load-button";
 
 interface AppProps {
   service: BlockChainService;

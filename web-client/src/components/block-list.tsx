@@ -1,5 +1,5 @@
 import React, { MouseEvent } from "react";
-import { Block } from "./data/block";
+import { Block } from "../data/block";
 import BlockElement from "./block-element";
 
 interface BlockListProps {
