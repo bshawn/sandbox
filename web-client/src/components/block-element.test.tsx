@@ -2,7 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import BlockElement from "./block-element";
 import { Block } from "../data/block";
-import { shallow, mount, fireEvent } from "enzyme";
+import { mount } from "enzyme";
 
 let block: Block;
 beforeEach(() => {
