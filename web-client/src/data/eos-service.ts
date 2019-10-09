@@ -24,7 +24,11 @@ export class EosService implements BlockChainService {
         id = blocks[i - 1].previousId;
       }
 
-      result = await this.jsonRpc.get_block(id);
+      try {
+        result = await this.jsonRpc.get_block(id);
+      } catch {
+        throw new Error("call to get_block failed");
+      }
       blocks.push(Block.fromBlockResult(result));
 
       i++;

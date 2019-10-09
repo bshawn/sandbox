@@ -38,6 +38,11 @@ describe("getInfo", () => {
     await service.getInfo();
     expect(rpc.get_info).toHaveBeenCalled();
   });
+
+  it("throws an error if the call fails", async () => {
+    rpc.get_info = fakeGetInfoWithRejection();
+    expect(() => service.getInfo()).toThrow();
+  });
 });
 
 describe("getAbi", () => {
@@ -49,6 +54,11 @@ describe("getAbi", () => {
   it("calls rpc.get_abi()", async () => {
     await service.getAbi("test");
     expect(rpc.get_abi).toHaveBeenCalled();
+  });
+
+  it("throws an error if the call fails", async () => {
+    rpc.get_abi = fakeGetAbiWithRejection();
+    expect(() => service.getAbi("test")).toThrow();
   });
 });
 
@@ -83,6 +93,11 @@ describe("getRecentBlocks", () => {
     await service.getRecentBlocks(5);
     expect(rpc.get_info).toHaveBeenCalledTimes(1);
   });
+
+  it("throws an error if the call fails", async () => {
+    rpc.get_block = fakeGetBlockWithRejection();
+    expect(() => service.getRecentBlocks(1)).toThrow();
+  });
 });
 
 function fakeGetInfo(): jest.Mock<Promise<GetInfoResult>> {
@@ -102,6 +117,14 @@ function fakeGetInfo(): jest.Mock<Promise<GetInfoResult>> {
         block_cpu_limit: 0,
         block_net_limit: 0
       };
+    }
+  );
+}
+
+function fakeGetInfoWithRejection(): jest.Mock<Promise<GetInfoResult>> {
+  return jest.fn(
+    (): Promise<GetInfoResult> => {
+      return Promise.reject("This failed");
     }
   );
 }
@@ -175,6 +198,10 @@ function fakeGetAbi(): jest.Mock<Promise<GetAbiResult>> {
   );
 }
 
+function fakeGetAbiWithRejection(): jest.Mock<Promise<GetAbiResult>> {
+  return jest.fn(() => Promise.reject("this failed"));
+}
+
 function fakeGetBlock(): jest.Mock<Promise<GetBlockResult>> {
   return jest.fn(
     async (blockNumOrId: number | string): Promise<GetBlockResult> => {
@@ -193,4 +220,8 @@ function fakeGetBlock(): jest.Mock<Promise<GetBlockResult>> {
       };
     }
   );
+}
+
+function fakeGetBlockWithRejection(): jest.Mock<Promise<GetBlockResult>> {
+  return jest.fn(() => Promise.reject("this failed"));
 }
