@@ -17,7 +17,7 @@ const BlockElement: React.FC<BlockElementProps> = props => {
         className="clickable card-header"
         onClick={() => setIsExpanded(!isExpanded)}
       >
-        <p className="card-header-title">
+        <div className="card-header-title">
           <div className="media">
             <div className="media-left">
               <figure className="image is-64x64">
@@ -39,7 +39,7 @@ const BlockElement: React.FC<BlockElementProps> = props => {
               </div>
             </div>
           </div>
-        </p>
+        </div>
         <a href="#" className="card-header-icon" aria-label="more options">
           <span className="icon">
             <i className="fas fa-angle-down" aria-hidden="true"></i>
