@@ -1,16 +1,22 @@
-import React, { MouseEvent } from "react";
+import React, { useState, MouseEvent } from "react";
 import { Block } from "./data/block";
+import BlockElementCode from "./block-element-code";
+import "./block-element.scss";
 
 interface BlockElementProps {
   block: Block;
-  isExpanded: boolean;
   onClick?: (e: MouseEvent) => void;
 }
 
 const BlockElement: React.FC<BlockElementProps> = props => {
+  const [isExpanded, setIsExpanded] = useState(false);
+
   return (
     <div className="card">
-      <header className="card-header">
+      <header
+        className="clickable card-header"
+        onClick={() => setIsExpanded(!isExpanded)}
+      >
         <p className="card-header-title">
           <div className="media">
             <div className="media-left">
@@ -24,7 +30,11 @@ const BlockElement: React.FC<BlockElementProps> = props => {
                   <strong>{props.block.id}</strong>
                 </p>
                 <p>
-                  <small>{props.block.timestamp}</small>
+                  <small>
+                    {props.block.timestamp}
+                    <br />
+                    {props.block.actionCount} actions
+                  </small>
                 </p>
               </div>
             </div>
@@ -36,11 +46,7 @@ const BlockElement: React.FC<BlockElementProps> = props => {
           </span>
         </a>
       </header>
-      <div className="card-content">
-        <div className="content">
-          <pre>{props.block.raw}</pre>
-        </div>
-      </div>
+      <BlockElementCode isExpanded={isExpanded} code={props.block.raw} />
     </div>
   );
 };

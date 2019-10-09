@@ -14,20 +14,10 @@ const BlockList: React.FC<BlockListProps> = props => {
   return (
     <div>
       {props.blocks.map(b => (
-        <BlockElement
-          block={b}
-          isExpanded={false}
-          key={b.id}
-          onClick={handleBlockClick}
-        />
+        <BlockElement block={b} key={b.id} />
       ))}
     </div>
   );
 };
-
-function handleBlockClick(e: MouseEvent) {
-  // Collapse currently expanded block
-  // Expand clicked block
-}
 
 export default BlockList;
