@@ -1,32 +1,17 @@
 import { EosService } from "./eos-service";
-import { Api, JsonRpc, RpcError } from "eosjs";
-import {
-  SignatureProvider,
-  SignatureProviderArgs
-} from "eosjs/dist/eosjs-api-interfaces";
-import {
-  GetBlockResult,
-  GetInfoResult,
-  PushTransactionArgs
-} from "eosjs/dist/eosjs-rpc-interfaces";
+import { JsonRpc } from "eosjs";
+import { GetBlockResult, GetInfoResult } from "eosjs/dist/eosjs-rpc-interfaces";
 import { BlockChainInfo } from "./block-chain-info";
 
 jest.mock("eosjs");
 
 let service: EosService;
 let rpc: JsonRpc;
-let sigProvider: SignatureProvider;
-let api: Api;
 
 beforeEach(() => {
   rpc = new JsonRpc("test");
   rpc.get_info = fakeGetInfo();
   rpc.get_block = fakeGetBlock();
-  sigProvider = fakeSignatureProvider();
-  api = new Api({
-    rpc: rpc,
-    signatureProvider: sigProvider
-  });
 
   service = new EosService(rpc);
 });
@@ -121,20 +106,4 @@ function fakeGetBlock(): jest.Mock<Promise<GetBlockResult>> {
       };
     }
   );
-}
-
-function fakeSignatureProvider(): SignatureProvider {
-  return {
-    getAvailableKeys: jest.fn(() => Promise.resolve(["test1", "test2"])),
-    sign: jest.fn((args: SignatureProviderArgs) =>
-      Promise.resolve(fakePushTxArgs())
-    )
-  };
-}
-
-function fakePushTxArgs(): PushTransactionArgs {
-  return {
-    signatures: ["test1", "test2"],
-    serializedTransaction: new Uint8Array()
-  };
 }
