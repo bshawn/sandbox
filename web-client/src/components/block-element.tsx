@@ -39,6 +39,7 @@ const BlockElement: React.FC<BlockElementProps> = props => {
             </div>
           </div>
         </div>
+        {/* eslint-disable-next-line */}
         <a href="#" className="card-header-icon" aria-label="more options">
           <span className="icon">
             <i className="fas fa-angle-down" aria-hidden="true"></i>
